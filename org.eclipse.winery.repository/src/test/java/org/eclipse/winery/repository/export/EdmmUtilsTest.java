@@ -33,6 +33,6 @@ class EdmmUtilsTest extends TestWithGitBackedRepository {
 
         Map<QName, TServiceTemplate> allToscaLightCompliantModels = EdmmUtils.getAllToscaLightCompliantModels();
 
-        assertEquals(12, allToscaLightCompliantModels.size());
+        assertEquals(15, allToscaLightCompliantModels.size());
     }
 }
