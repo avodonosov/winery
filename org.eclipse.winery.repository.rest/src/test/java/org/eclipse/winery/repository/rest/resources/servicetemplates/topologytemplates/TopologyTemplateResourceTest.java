@@ -185,4 +185,25 @@ public class TopologyTemplateResourceTest extends AbstractResourceTest {
         this.assertGet("servicetemplates/http%253A%252F%252Fplain.winery.opentosca.org%252Fservicetemplates/STWithUpdateableComponent_w1-wip1/topologytemplate/newversions",
             "servicetemplates/nodeTemplateVersionListWithoutFeatures.json");
     }
+
+    @Test
+    public void getAvailableFeaturesFilteredByDeploymentTechnologyOpenStack() throws Exception {
+        this.setRevisionTo("origin/plain");
+        this.assertGet("servicetemplates/http%253A%252F%252Fopentosca.org%252Fadd%252Fmanagement%252Fto%252Finstances%252Fservicetemplates/STWithBasicManagementOnly_OpenStackHeat-w1-wip1/topologytemplate/availablefeatures",
+            "servicetemplates/topologytemplates/availableFeatures-openStack.json");
+    }
+
+    @Test
+    public void getAvailableFeaturesFilteredByDeploymentTechnologyPuppet() throws Exception {
+        this.setRevisionTo("origin/plain");
+        this.assertGet("servicetemplates/http%253A%252F%252Fopentosca.org%252Fadd%252Fmanagement%252Fto%252Finstances%252Fservicetemplates/STWithBasicManagementOnly_Puppet-w1-wip1/topologytemplate/availablefeatures",
+            "servicetemplates/topologytemplates/availableFeatures-puppet.json");
+    }
+
+    @Test
+    public void getAvailableFeaturesNoDeploymentTechnologyAnnotated() throws Exception {
+        this.setRevisionTo("origin/plain");
+        this.assertGet("servicetemplates/http%253A%252F%252Fopentosca.org%252Fadd%252Fmanagement%252Fto%252Finstances%252Fservicetemplates/STWithBasicManagementOnly_noDeplTech-w1-wip1/topologytemplate/availablefeatures",
+            "servicetemplates/topologytemplates/availableFeatures.json");
+    }
 }
