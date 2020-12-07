@@ -17,23 +17,23 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-            ~/successful-hashvers-java8
-          key: ${{ runner.os }}-maven-java8-${{ hashFiles('**/pom.xml') }}
+            ~/successful-hashvers-java8-hvtest5
+          key: ${{ runner.os }}-maven-java8-hvtest5-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-java8-
+            ${{ runner.os }}-maven-java8-hvtest5-
       - name: Determine affected Maven projects
         id: affected-projects
         shell: bash
         run: |
-          mkdir -p "${HOME}/successful-hashvers-java8" || true
-          mvn -P java pro.avodonosov:hashver-maven-plugin:1.6:projects-to-build -DdbDir="${HOME}/successful-hashvers-java8"
+          mkdir -p "${HOME}/successful-hashvers-java8-hvtest5" || true
+          mvn -P java pro.avodonosov:hashver-maven-plugin:1.6:projects-to-build -DdbDir="${HOME}/successful-hashvers-java8-hvtest5"
           echo "::set-output name=list::$(cat target/hashver-projects-to-build)" 
       - name: Build the affected Maven projects
         if: ${{ steps.affected-projects.outputs.list }}
         run: mvn -Pjava -B package -pl ${{ steps.affected-projects.outputs.list }} -am
       - name: Save successfull hashvers
         if: ${{ steps.affected-projects.outputs.list && success() }}
-        run: cp -r target/hashver-db-additions/* "${HOME}/successful-hashvers-java8"
+        run: cp -r target/hashver-db-additions/* "${HOME}/successful-hashvers-java8-hvtest5"
 
   java12:
     runs-on: ubuntu-latest
@@ -48,23 +48,23 @@ jobs:
         with:
           path: |
             ~/.m2/repository
-            ~/successful-hashvers-java12
+            ~/successful-hashvers-java12-hvtest5
           key: ${{ runner.os }}-maven-java12-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-java12-
+            ${{ runner.os }}-maven-java12-hvtest5-
       - name: Determine affected Maven projects
         id: affected-projects
         shell: bash
         run: |
-          mkdir -p "${HOME}/successful-hashvers-java12" || true
-          mvn -P java pro.avodonosov:hashver-maven-plugin:1.6:projects-to-build -DdbDir="${HOME}/successful-hashvers-java12"
+          mkdir -p "${HOME}/successful-hashvers-java12-hvtest5" || true
+          mvn -P java pro.avodonosov:hashver-maven-plugin:1.6:projects-to-build -DdbDir="${HOME}/successful-hashvers-java12-hvtest5"
           echo "::set-output name=list::$(cat target/hashver-projects-to-build)"
       - name: Build the affected Maven projects
         if: ${{ steps.affected-projects.outputs.list }}
         run: mvn -Pjava -B package -pl ${{ steps.affected-projects.outputs.list }} -am
       - name: Save successfull hashvers
         if: ${{ steps.affected-projects.outputs.list && success() }}
-        run: cp -r target/hashver-db-additions/* "${HOME}/successful-hashvers-java12"
+        run: cp -r target/hashver-db-additions/* "${HOME}/successful-hashvers-java12-hvtest5"
 
   frontend:
     runs-on: ubuntu-latest
